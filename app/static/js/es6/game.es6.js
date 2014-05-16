@@ -1,5 +1,7 @@
 /* jshint unused:false */
 
+var audioChop, audioBeanStalk;
+
 (function(){
   'use strict';
 
@@ -12,7 +14,26 @@
     $('#forest').on('click', '.grow', grow);
     $('#forest').on('click', '.chop', chop);
     $('#dashboard').on('click', '#sell-wood', sellWood);
+    $('#dashboard').on('click', '#purchase-autogrow', purchaseAutoGrow);
+    preloadAssets();
   }
+
+
+  function purchaseAutoGrow(){
+    //create a function where the wood grows automatically once you buy this feature
+    var userId = $('#user').attr('data-id');
+    ajax(`/users/${userId}/purchase/autogrow`, 'put', null, h=>{
+      $('#dashboard').empty().append(h);
+    });
+
+  }
+
+  function preloadAssets(){
+    audioChop = $('<audio>')[0];  //preloads sound asset
+    audioChop.src = '/audios/chop.wav';
+    audioBeanStalk = $('<audio>')[0];
+    audioBeanStalk.src = '/audios/beanstalk.wav';
+    }
 
   function sellWood(){
     var userId = $('#user').attr('data-id');
@@ -23,6 +44,7 @@
   }
 
   function chop(){
+    audioChop.play();  //plays audio file
     var tree = $(this).closest('.tree');
     var treeId = tree.attr('data-id');
     var userId = $('#user').attr('data-id');
@@ -44,6 +66,9 @@
     var treeId = tree.attr('data-id');
     ajax(`/trees/${treeId}/grow`, 'put', null, h=>{
       tree.replaceWith(h);
+      if($(h).hasClass('beanstalk')){
+        audioBeanStalk.play();
+      }
     });
   }
 
@@ -69,7 +94,10 @@
     });
   }
 
-  function ajax(url, type, data={}, success=r=>console.log(r), dataType='html'){
-    $.ajax({url:url, type:type, dataType:dataType, data:data, success:success});
-  }
+
 })();
+
+function ajax(url, type, data={}, success=r=>console.log(r), dataType='html'){
+  'use strict';
+  $.ajax({url:url, type:type, dataType:dataType, data:data, success:success});
+}

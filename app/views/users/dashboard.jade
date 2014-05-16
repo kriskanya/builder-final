@@ -1,8 +1,15 @@
 #overview
   #user(data-id=user._id.toString()) User: #{user.username}
-  #wood Wood: #{user.wood}
-  #cash Cash: $#{user.cash}
+  #wood Wood: #{user.wood.toFixed(2)}
+  #cash Cash: $#{user.cash.toFixed(2)}
 button#plant Plant Seed
 button#getforest Get Forest
 button#sell-wood Sell Wood
 input#wood-amt(type='text', placeholder='Wood Amt')
+if(user.isAutoGrowAvailable)
+  button#purchase-autogrow Auto Grow
+#items
+  each item in user.items
+    case item.type
+      when 'autogrow'
+        include ../items/autogrow

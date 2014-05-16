@@ -1,3 +1,5 @@
+var audioChop,
+    audioBeanStalk;
 (function() {
   'use strict';
   $(document).ready(init);
@@ -8,6 +10,20 @@
     $('#forest').on('click', '.grow', grow);
     $('#forest').on('click', '.chop', chop);
     $('#dashboard').on('click', '#sell-wood', sellWood);
+    $('#dashboard').on('click', '#purchase-autogrow', purchaseAutoGrow);
+    preloadAssets();
+  }
+  function purchaseAutoGrow() {
+    var userId = $('#user').attr('data-id');
+    ajax(("/users/" + userId + "/purchase/autogrow"), 'put', null, (function(h) {
+      $('#dashboard').empty().append(h);
+    }));
+  }
+  function preloadAssets() {
+    audioChop = $('<audio>')[0];
+    audioChop.src = '/audios/chop.wav';
+    audioBeanStalk = $('<audio>')[0];
+    audioBeanStalk.src = '/audios/beanstalk.wav';
   }
   function sellWood() {
     var userId = $('#user').attr('data-id');
@@ -17,6 +33,7 @@
     }));
   }
   function chop() {
+    audioChop.play();
     var tree = $(this).closest('.tree');
     var treeId = tree.attr('data-id');
     var userId = $('#user').attr('data-id');
@@ -36,6 +53,9 @@
     var treeId = tree.attr('data-id');
     ajax(("/trees/" + treeId + "/grow"), 'put', null, (function(h) {
       tree.replaceWith(h);
+      if ($(h).hasClass('beanstalk')) {
+        audioBeanStalk.play();
+      }
     }));
   }
   function forest() {
@@ -57,20 +77,21 @@
       $('#dashboard').empty().append(h);
     }));
   }
-  function ajax(url, type) {
-    var data = arguments[2] !== (void 0) ? arguments[2] : {};
-    var success = arguments[3] !== (void 0) ? arguments[3] : (function(r) {
-      return console.log(r);
-    });
-    var dataType = arguments[4] !== (void 0) ? arguments[4] : 'html';
-    $.ajax({
-      url: url,
-      type: type,
-      dataType: dataType,
-      data: data,
-      success: success
-    });
-  }
 })();
+function ajax(url, type) {
+  'use strict';
+  var data = arguments[2] !== (void 0) ? arguments[2] : {};
+  var success = arguments[3] !== (void 0) ? arguments[3] : (function(r) {
+    return console.log(r);
+  });
+  var dataType = arguments[4] !== (void 0) ? arguments[4] : 'html';
+  $.ajax({
+    url: url,
+    type: type,
+    dataType: dataType,
+    data: data,
+    success: success
+  });
+}
 
 //# sourceMappingURL=game.map
