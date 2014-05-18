@@ -27,8 +27,6 @@ class User{
   purchase(item){
     if(item.cost <= this.cash){
       this.cash -= item.cost;    //deduct cash from user
-      console.log(this);
-      console.log(item);
       this.items.push(item);  //push the item into the array
     }
   }
@@ -36,6 +34,11 @@ class User{
   get isAutoGrowAvailable(){
     var isPresent = _(this.items).any(i=>i.type === 'autogrow');  //loops over all the items and checks if their type === 'autogrow'
     return this.cash >= 50000 && (!isPresent);  //the autogrow button should only show up if you have cash and if you haven't already selected it
+  }
+
+  get isAutoSeedAvailable(){
+    var isPresent = _(this.items).any(i=>i.type === 'autoseed');  //loops over all the items and checks if their type === 'autoseed'
+    return this.cash >= 75000 && (!isPresent);  //the autogrow button should only show up if you have cash and if you haven't already selected it
   }
 
   static findByUserId(userId, fn){

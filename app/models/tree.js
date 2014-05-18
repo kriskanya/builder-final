@@ -12,6 +12,11 @@ class Tree{
     this.isChopped = false;
   }
 
+  findTreeHeight(){
+    console.log('xxxxxxxxx');
+    console.log(trees.height);
+  }
+
   save(fn){
     trees.save(this, ()=>fn());
   }

@@ -8,6 +8,8 @@
   var isOn = false;
   var timer;
   function grow() {
+    var chopValue = $('#range-slider').val();
+    console.log(chopValue);
     isOn = !isOn;
     $('#autogrow').toggleClass('on');
     if (isOn) {
@@ -39,6 +41,13 @@
       range: {
         'min': 0,
         'max': 10000
+      },
+      serialization: {
+        lower: [$.Link({target: $('#chopValue')})],
+        format: {
+          thousand: ',',
+          prefix: ''
+        }
       }
     });
   }

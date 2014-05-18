@@ -11,7 +11,14 @@ var audioChop,
     $('#forest').on('click', '.chop', chop);
     $('#dashboard').on('click', '#sell-wood', sellWood);
     $('#dashboard').on('click', '#purchase-autogrow', purchaseAutoGrow);
+    $('#dashboard').on('click', '#purchase-autoseed', purchaseAutoSeed);
     preloadAssets();
+  }
+  function purchaseAutoSeed() {
+    var userId = $('#user').attr('data-id');
+    ajax(("/users/" + userId + "/purchase/autoseed"), 'put', null, (function(h) {
+      $('#dashboard').empty().append(h);
+    }));
   }
   function purchaseAutoGrow() {
     items();

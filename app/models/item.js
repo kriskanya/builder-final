@@ -11,6 +11,10 @@ class Item{    //when you create a new item, it takes in the Item's type
       this.cost = 50000;
       this.image = '/img/autogrow.jpg';
       break;
+    case 'autoseed':
+      this.cost = 75000;
+      this.image = '/img/autoseed.jpg';
+      break;
     }
   }
 }
