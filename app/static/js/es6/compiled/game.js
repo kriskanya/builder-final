@@ -14,6 +14,7 @@ var audioChop,
     preloadAssets();
   }
   function purchaseAutoGrow() {
+    items();
     var userId = $('#user').attr('data-id');
     ajax(("/users/" + userId + "/purchase/autogrow"), 'put', null, (function(h) {
       $('#dashboard').empty().append(h);
@@ -64,6 +65,12 @@ var audioChop,
       $('#forest').empty().append(h);
     }));
   }
+  function items() {
+    var userId = $('#user').attr('data-id');
+    ajax(("/items?userId=" + userId), 'get', null, (function(h) {
+      $('#items').empty().append(h);
+    }));
+  }
   function plant() {
     var userId = $('#user').attr('data-id');
     ajax('/trees/plant', 'post', {userId: userId}, (function(h) {
@@ -75,6 +82,8 @@ var audioChop,
     ajax('/login', 'post', {username: username}, (function(h) {
       $('#username').val('');
       $('#dashboard').empty().append(h);
+      forest();
+      items();
     }));
   }
 })();

@@ -3,6 +3,7 @@
   init();
   function init() {
     $('#autogrow').click(grow);
+    sliderBar();
   }
   var isOn = false;
   var timer;
@@ -31,6 +32,15 @@
         }
       }));
     }));
+  }
+  function sliderBar() {
+    $('#range-slider').noUiSlider({
+      start: 40,
+      range: {
+        'min': 0,
+        'max': 10000
+      }
+    });
   }
 })();
 

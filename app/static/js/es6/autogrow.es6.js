@@ -7,6 +7,7 @@
 
   function init(){
     $('#autogrow').click(grow);  //#autogrow is created in autogrow.jade
+    sliderBar();
   }
 
   var isOn = false;
@@ -38,8 +39,16 @@
             audioBeanStalk.play();
           }
         });
+    });
+  }
 
-
+  function sliderBar(){
+    $('#range-slider').noUiSlider({
+    	start: 40,
+    	range: {
+    		'min': 0,
+    		'max': 10000
+      }
     });
   }
 

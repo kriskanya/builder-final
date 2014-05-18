@@ -21,9 +21,11 @@ var audioChop, audioBeanStalk;
 
   function purchaseAutoGrow(){
     //create a function where the wood grows automatically once you buy this feature
+    items();
     var userId = $('#user').attr('data-id');
     ajax(`/users/${userId}/purchase/autogrow`, 'put', null, h=>{
       $('#dashboard').empty().append(h);
+
     });
 
   }
@@ -79,6 +81,13 @@ var audioChop, audioBeanStalk;
     });
   }
 
+  function items(){
+    var userId = $('#user').attr('data-id');
+    ajax(`/items?userId=${userId}`, 'get', null, h=>{
+      $('#items').empty().append(h);
+    });
+  }
+
   function plant(){
     var userId = $('#user').attr('data-id');
     ajax('/trees/plant', 'post', {userId:userId}, h=>{
@@ -91,8 +100,11 @@ var audioChop, audioBeanStalk;
     ajax('/login', 'post', {username:username}, h=>{
       $('#username').val('');
       $('#dashboard').empty().append(h);
+      forest();
+      items();
     });
   }
+
 
 
 })();

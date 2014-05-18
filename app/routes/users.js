@@ -29,3 +29,7 @@ exports.purchase = (req, res)=>{
     });
   });
 };
+
+exports.items = (req, res)=>{
+  User.findByUserId(req.query.userId, user=>res.render('users/items', {user:user}));
+};
