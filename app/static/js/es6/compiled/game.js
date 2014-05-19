@@ -12,7 +12,14 @@ var audioChop,
     $('#dashboard').on('click', '#sell-wood', sellWood);
     $('#dashboard').on('click', '#purchase-autogrow', purchaseAutoGrow);
     $('#dashboard').on('click', '#purchase-autoseed', purchaseAutoSeed);
+    $('#dashboard').on('click', '#purchase-autoroot', purchaseAutoRoot);
     preloadAssets();
+  }
+  function purchaseAutoRoot() {
+    var userId = $('#user').attr('data-id');
+    ajax(("/users/" + userId + "/purchase/autoroot"), 'put', null, (function(h) {
+      $('#dashboard').empty().append(h);
+    }));
   }
   function purchaseAutoSeed() {
     var userId = $('#user').attr('data-id');

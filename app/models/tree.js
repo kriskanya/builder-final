@@ -12,10 +12,10 @@ class Tree{
     this.isChopped = false;
   }
 
-  findTreeHeight(){
-    console.log('xxxxxxxxx');
-    console.log(trees.height);
-  }
+  // findTreeHeight(){
+  //   console.log('xxxxxxxxx');
+  //   console.log(trees.height);
+  // }
 
   save(fn){
     trees.save(this, ()=>fn());
@@ -60,6 +60,10 @@ class Tree{
     this.height = 0;
     this.isHealthy = false;
     this.isChopped = true;
+  }
+
+  destroy(fn){
+    trees.remove(this, ()=>fn());
   }
 
   get isAdult(){  //if you put 'get' in front of this function, you can call it like a data property

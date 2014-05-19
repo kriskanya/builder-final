@@ -8,6 +8,13 @@ exports.plant = (req, res)=>{
   Tree.plant(req.body.userId, tree=>res.render('trees/tree', {tree:tree}));
 };
 
+exports.destroy = (req, res)=>{
+  Tree.findByTreeId(req.params.treeId, tree=>{
+    tree.destroy(()=>{
+    });
+  });
+};
+
 exports.forest = (req, res)=>{
   Tree.findAllByUserId(req.query.userId, trees=>res.render('trees/forest', {trees:trees}));
 };
